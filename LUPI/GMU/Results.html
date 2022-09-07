@@ -1,0 +1,29 @@
+{{ block title }}
+    Results<br>
+    回合結果
+{{ endblock }}
+
+{{ block content }}
+
+{{ if group.winnernum == 100 }}
+    <p>
+        There is <strong>no winner</strong>  in this round.<br>
+        這一局沒有勝利者。
+    </p>
+{{ endif }}
+
+{{ if group.winnernum != 100 }}
+    <p>
+        The winner is <strong>{{group.winnername}}</strong>, and the winning choice is <strong>{{group.winnernum}}</strong> .<br>
+        這一局的勝利者是<strong>{{group.winnername}}</strong>，他所選取的號碼是<strong>{{group.winnernum}}</strong>。
+    </p>
+{{ endif }}
+Your guess is <strong>{{player.NumInput}}.</strong> <br>
+你選擇的號碼是<strong>{{player.NumInput}}。</strong><br>
+Your payoff in this round is <strong>{{player.payoff}}</strong>. <br>
+你這局所獲得的報酬是<strong>{{player.payoff}}</strong>。<br>
+<img width="100%" src="data:image/png;base64,{{ my_img }}">
+    {{ next_button }}
+{{ endblock }}
+
+
