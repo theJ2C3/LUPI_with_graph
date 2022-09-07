@@ -100,7 +100,7 @@ def create_figure(player:Player):
         if i% 5 == 0:
             xlabel[i] = i
 
-    plt.clf()
+    # plt.clf()
     
     plt.figure(figsize=(7, 3))
     # plt.plot(xdata, ydata, color='red', marker='d', markersize=10)
