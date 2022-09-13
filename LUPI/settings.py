@@ -5,7 +5,7 @@ SESSION_CONFIGS = [
         name='GMU',
         display_name = "lowest unique positive int",
         app_sequence=['GMU'],
-        num_demo_participants=2,
+        num_demo_participants=3,
     ),
     # dict(
     #     name='public_goods',

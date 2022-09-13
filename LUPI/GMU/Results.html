@@ -8,20 +8,23 @@
 {{ if group.winnernum == 100 }}
     <p>
         There is <strong>no winner</strong>  in this round.<br>
-        這一局沒有勝利者。
+        這一局<strong>沒有勝利者</strong>。
     </p>
 {{ endif }}
 
 {{ if group.winnernum != 100 }}
     <p>
         The winner is <strong>{{group.winnername}}</strong>, and the winning choice is <strong>{{group.winnernum}}</strong> .<br>
-        這一局的勝利者是<strong>{{group.winnername}}</strong>，他所選取的號碼是<strong>{{group.winnernum}}</strong>。
+        這一局的勝利者是 <strong>{{group.winnername}}</strong> ，他所選取的號碼是 <strong>{{group.winnernum}}</strong>。
     </p>
 {{ endif }}
-Your guess is <strong>{{player.NumInput}}.</strong> <br>
-你選擇的號碼是<strong>{{player.NumInput}}。</strong><br>
-Your payoff in this round is <strong>{{player.payoff}}</strong>. <br>
-你這局所獲得的報酬是<strong>{{player.payoff}}</strong>。<br>
+Your choice is <strong>{{player.NumInput}}.</strong> <br>
+你選擇的號碼是 <strong>{{player.NumInput}}。</strong><br>
+Your payoff of this round is <strong>{{player.payoff}}</strong>. <br>
+你這局所獲得的報酬是 <strong>{{player.payoff}}</strong>。<br>
+<br>
+The winner's choice is the one with<strong> red bar</strong> .<br>
+勝者的選項是柱狀圖中<strong>紅色那一條</strong>。<br>
 <img width="100%" src="data:image/png;base64,{{ my_img }}">
     {{ next_button }}
 {{ endblock }}

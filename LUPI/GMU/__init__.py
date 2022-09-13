@@ -8,6 +8,7 @@ from base64 import b64encode
 import urllib
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MaxNLocator
+import matplotlib.patches as mpatches
 import numpy as np
 
 
@@ -38,7 +39,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     playerName= models.StringField(
-        label = "Player Name/玩家名稱或暱稱"
+        label = "Name or Nickname/名稱或暱稱"
         # default = 1
         )
     NumInput = models.IntegerField(
@@ -52,24 +53,6 @@ class Player(BasePlayer):
 
 
 # FUNCTIONS
-
-# def sorted_list(group: Group):
-#     guess_players_dict = {}  # {NumInput: players}
-
-#     # save all data as dic
-#     for p in group.get_players():
-#         if p.NumInput in guess_players_dict:
-#             players = guess_players_dict[p.NumInput]
-#         else:
-#             players = []
-#         players.append(p)
-#         guess_players_dict[p.NumInput] = players  
-
-#     # ASGPD = sorted(guess_players_dict.items())
-#     return sorted(guess_players_dict.items())
-
-
-
 
 def create_figure(player:Player):
 
@@ -85,34 +68,39 @@ def create_figure(player:Player):
         guess_players_dict[p.NumInput] = players
     
     sorted_guess_count = sorted(guess_players_dict.items())
-    # sorted_guess_count = sorted_list()
-    guess_distrubution = [0 for i in range(C.GUESS_MAX)]
+
+    guess_distrubution = [0 for i in range(C.GUESS_MAX+1)]
 
     for num, players in sorted_guess_count:
         guess_distrubution[num] = len(players)
 
     ydata = guess_distrubution
     # ydata = sorted_list(group)
-    xdata = [i+1 for i in range(C.GUESS_MAX)]
-    xlabel = [ None for i in range(C.GUESS_MAX)]
+    xdata = [i+1 for i in range(C.GUESS_MAX+1)]
+    xlabel = [ None for i in range(C.GUESS_MAX+1)]
     ylabel = [i  for i in range(max(guess_distrubution)+1)]
-    for i in range(C.GUESS_MAX):
+    for i in range(C.GUESS_MAX+1):
         if i% 5 == 0:
             xlabel[i] = i
 
     # plt.clf()
     
     plt.figure(figsize=(7, 3))
-    # plt.plot(xdata, ydata, color='red', marker='d', markersize=10)
-    # plt.bar(*np.unique(ydata, return_counts=True))
-    plt.bar(xdata, ydata)
-    
-    # plt.plot(range(10), np.random.rand(10), color='red', marker='d', markersize=10)
+
+    clrs = ['blue']*C.GUESS_MAX
+    if(player.group.winnernum != 100):
+        clrs[player.group.winnernum] = 'red'
+    plt.bar(xdata, ydata, color=clrs)
+
+    red_patch = mpatches.Patch(color='red', label='The Winner Choice')
+    blue_patch = mpatches.Patch(color='blue', label='Other Choices')
+
+    plt.legend(handles=[red_patch, blue_patch])
 
     fig = plt.gcf()
-    plt.xlabel("Guessed Number")
-    plt.ylabel("Guessed Number Count")
-    plt.title("Distribution of Guesses")
+    plt.xlabel("Choice Number")
+    plt.ylabel("Choice Number Count")
+    plt.title("Distribution of choices")
     plt.yticks(ylabel)
     plt.xticks(xdata,xlabel)
 
@@ -197,8 +185,6 @@ class Results(Page):
 class Final(Page):
     def is_displayed(player: Player):
         return player.round_number == C.NUM_ROUNDS
-
-    # <img width="100%" src="data:image/png;base64,{{ my_img }}">
     # pass
 
 page_sequence = [Introduction, IdPage, Guess, ResultsWaitPage, Results, Final]
