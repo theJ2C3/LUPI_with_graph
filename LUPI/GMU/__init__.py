@@ -9,7 +9,9 @@ import urllib
 from matplotlib import pyplot as plt
 from matplotlib.ticker import MaxNLocator
 import matplotlib.patches as mpatches
-import numpy as np
+import matplotlib.font_manager as fm
+font = fm.FontProperties(fname='c:\\windows\\fonts\\simsun.ttc')  # speicify font
+
 
 
 doc = """
@@ -92,15 +94,22 @@ def create_figure(player:Player):
         clrs[player.group.winnernum] = 'red'
     plt.bar(xdata, ydata, color=clrs)
 
-    red_patch = mpatches.Patch(color='red', label='The Winner Choice')
-    blue_patch = mpatches.Patch(color='blue', label='Other Choices')
+    # red_patch = mpatches.Patch(color='red', label='The Winner\'s Choice')
+    # blue_patch = mpatches.Patch(color='blue', label='Others\' Choices')
 
-    plt.legend(handles=[red_patch, blue_patch])
+    
+    red_patch = mpatches.Patch(color='red', label='The Winner\'s Choice/勝者的選項')
+    blue_patch = mpatches.Patch(color='blue', label='Others\' Choices/其餘參與者的選項')
+
+    plt.legend(handles=[red_patch, blue_patch], prop=font)
 
     fig = plt.gcf()
-    plt.xlabel("Choice Number")
-    plt.ylabel("Choice Number Count")
-    plt.title("Distribution of choices")
+    # plt.xlabel("Choice Number")
+    # plt.ylabel("Choice Number Count")
+    # plt.title("Distribution of choices")
+    plt.xlabel("Choice Number/選擇的數字", fontproperties=font)
+    plt.ylabel("Choice Number Count/選擇的人數", fontproperties=font)
+    plt.title("Distribution of choices/選擇次數分配圖", fontproperties=font)    
     plt.yticks(ylabel)
     plt.xticks(xdata,xlabel)
 
